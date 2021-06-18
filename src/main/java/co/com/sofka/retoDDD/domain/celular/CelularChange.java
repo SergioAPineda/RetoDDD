@@ -1,8 +1,8 @@
 package co.com.sofka.retoDDD.domain.celular;
 
 import co.com.sofka.domain.generic.EventChange;
-import co.com.sofka.retoDDD.domain.celular.events.CelularCreado;
-import co.com.sofka.retoDDD.domain.celular.events.MarcaCreada;
+import co.com.sofka.retoDDD.domain.celular.events.*;
+import co.com.sofka.retoDDD.domain.celular.values.CategoriaId;
 
 import java.util.HashSet;
 
@@ -24,6 +24,27 @@ public class CelularChange extends EventChange {
                     event.getDescuento()
             );
             celular.marcas.add(marca);
+        });
+
+        apply((CategoriaCreada event) ->{
+            var categoria = new Categoria(
+                    event.getCategoriaId(),
+                    event.getCapacidad(),
+                    event.getGama(),
+                    event.getProcesador(),
+                    event.getTamaño()
+            );
+            celular.categorias.add(categoria);
+        });
+
+        apply((OperadorCreado event) ->{
+            var operador = new Operador(
+                    event.getOperadorId(),
+                    event.getTipoServicio(),
+                    event.getValorPlan(),
+                    event.getNombreOperador()
+            );
+            celular.operadores.add(operador);
         });
     }
 }

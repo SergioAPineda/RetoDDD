@@ -1,10 +1,12 @@
 package co.com.sofka.retoDDD.domain.celular;
 
 import co.com.sofka.domain.generic.AggregateEvent;
+import co.com.sofka.domain.generic.DomainEvent;
 import co.com.sofka.domain.generic.ValueObject;
 import co.com.sofka.retoDDD.domain.celular.events.*;
 import co.com.sofka.retoDDD.domain.celular.values.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -27,6 +29,33 @@ public class Celular extends AggregateEvent<CelularId> {
         subscribe(new CelularChange(this));
     }
 
+    public static Celular from(CelularId celularId, List<DomainEvent> events){
+        var celular = new Celular(celularId);
+        events.forEach(celular::applyEvent);
+        return celular;
+    }
+
+    public void crearMarca(MarcaId marcaId, NombreMarca nombreMarca, Descuento descuento){
+        Objects.requireNonNull(marcaId);
+        Objects.requireNonNull(nombreMarca);
+        Objects.requireNonNull(descuento);
+        appendChange(new MarcaCreada(marcaId, nombreMarca, descuento)).apply();
+    }
+
+    public void crearCategoria(CategoriaId categoriaId, Gama gama, Procesador procesador, Capacidad capacidad, Tamaño tamaño){
+        Objects.requireNonNull(categoriaId);
+        Objects.requireNonNull(gama);
+        appendChange(new CategoriaCreada(categoriaId, gama, procesador, capacidad, tamaño)).apply();
+    }
+
+        public void crearOperador(OperadorId operadorId, TipoServicio tipoServicio, ValorPlan valorPlan, NombreOperador nombreOperador){
+        Objects.requireNonNull(operadorId);
+        Objects.requireNonNull(tipoServicio);
+        Objects.requireNonNull(valorPlan);
+        Objects.requireNonNull(nombreOperador);
+        appendChange(new OperadorCreado(operadorId, tipoServicio, valorPlan, nombreOperador)).apply();
+    }
+
     public void actualizarNombreCelular(CelularId celularId, NombreCelular nombreCelular){
         Objects.requireNonNull(celularId);
         Objects.requireNonNull(nombreCelular);
@@ -43,12 +72,7 @@ public class Celular extends AggregateEvent<CelularId> {
         appendChange(new PrecioCelularCalculado(celularId, precio, marcaId, gama, procesador, descuento)).apply();
     }
 
-    public void crearMarca(MarcaId marcaId, NombreMarca nombreMarca, Descuento descuento){
-        Objects.requireNonNull(marcaId);
-        Objects.requireNonNull(nombreMarca);
-        Objects.requireNonNull(descuento);
-        appendChange(new MarcaCreada(marcaId, nombreMarca, descuento)).apply();
-    }
+
 
     public void actualizarNombreMarca(MarcaId marcaId, NombreMarca nombreMarca){
         Objects.requireNonNull(marcaId);
@@ -63,11 +87,7 @@ public class Celular extends AggregateEvent<CelularId> {
         appendChange(new DescuentoCalculado(marcaId, nombreMarca, descuento)).apply();
     }
 
-    public void crearCategoria(CategoriaId categoriaId, Gama gama, Procesador procesador, Capacidad capacidad, Tamaño tamaño){
-        Objects.requireNonNull(categoriaId);
-        Objects.requireNonNull(gama);
-        appendChange(new CategoriaCreada(categoriaId, gama, procesador, capacidad, tamaño)).apply();
-    }
+
 
     public void definirGama(CategoriaId categoriaId, Gama gama, Procesador procesador, Capacidad capacidad, Tamaño tamaño){
         Objects.requireNonNull(categoriaId);
@@ -94,14 +114,6 @@ public class Celular extends AggregateEvent<CelularId> {
         Objects.requireNonNull(categoriaId);
         Objects.requireNonNull(tamaño);
         appendChange(new TamañoActualizado(categoriaId, tamaño)).apply();
-    }*/
-
-/*    public void crearOperador(OperadorId operadorId, TipoServicio tipoServicio, ValorPlan valorPlan, NombreOperador nombreOperador){
-        Objects.requireNonNull(operadorId);
-        Objects.requireNonNull(tipoServicio);
-        Objects.requireNonNull(valorPlan);
-        Objects.requireNonNull(nombreOperador);
-        appendChange(new OperadorCreado(operadorId, tipoServicio, valorPlan, nombreOperador)).apply();
     }*/
 
 /*    public void actualizarNombreOperador(OperadorId operadorId, NombreOperador nombreOperador){

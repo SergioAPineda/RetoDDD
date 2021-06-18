@@ -1,25 +1,26 @@
-package co.com.sofka.retoDDD.domain.celular.events;
+package co.com.sofka.retoDDD.domain.celular.commands;
 
-import co.com.sofka.domain.generic.DomainEvent;
-import co.com.sofka.retoDDD.domain.celular.values.NombreOperador;
-import co.com.sofka.retoDDD.domain.celular.values.OperadorId;
-import co.com.sofka.retoDDD.domain.celular.values.TipoServicio;
-import co.com.sofka.retoDDD.domain.celular.values.ValorPlan;
+import co.com.sofka.domain.generic.Command;
+import co.com.sofka.retoDDD.domain.celular.values.*;
 
-public class OperadorCreado extends DomainEvent {
+public class CrearOperador implements Command {
 
-
+    private final CelularId celularId;
     private final OperadorId operadorId;
     private final TipoServicio tipoServicio;
     private final ValorPlan valorPlan;
     private final NombreOperador nombreOperador;
 
-    public OperadorCreado(OperadorId operadorId, TipoServicio tipoServicio, ValorPlan valorPlan, NombreOperador nombreOperador) {
-        super("sofka.celular.operadorcreado");
+    public CrearOperador(CelularId celularId, OperadorId operadorId, TipoServicio tipoServicio, ValorPlan valorPlan, NombreOperador nombreOperador) {
+        this.celularId = celularId;
         this.operadorId = operadorId;
         this.tipoServicio = tipoServicio;
         this.valorPlan = valorPlan;
         this.nombreOperador = nombreOperador;
+    }
+
+    public CelularId getCelularId() {
+        return celularId;
     }
 
     public OperadorId getOperadorId() {
@@ -38,3 +39,4 @@ public class OperadorCreado extends DomainEvent {
         return nombreOperador;
     }
 }
+
