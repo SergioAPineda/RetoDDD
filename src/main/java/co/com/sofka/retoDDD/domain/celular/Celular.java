@@ -2,10 +2,10 @@ package co.com.sofka.retoDDD.domain.celular;
 
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.retoDDD.domain.celular.events.CelularCreado;
-import co.com.sofka.retoDDD.domain.celular.values.CelularId;
-import co.com.sofka.retoDDD.domain.celular.values.NombreCelular;
-import co.com.sofka.retoDDD.domain.celular.values.Precio;
+import co.com.sofka.retoDDD.domain.celular.events.MarcaCreada;
+import co.com.sofka.retoDDD.domain.celular.values.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class Celular extends AggregateEvent<CelularId> {
@@ -20,6 +20,17 @@ public class Celular extends AggregateEvent<CelularId> {
 
         super(entityId);
         appendChange(new CelularCreado(nombreCelular, precio)).apply();
+    }
+
+    public Celular(CelularId celularId){
+        super(celularId);
+        subscribe(new CelularChange(this));
+    }
+
+    public void crearMarca(MarcaId marcaId, NombreMarca nombreMarca, Descuento descuento){
+        Objects.requireNonNull(marcaId);
+        Objects.requireNonNull(nombreMarca);
+        appendChange(new MarcaCreada(marcaId, nombreMarca, descuento)).apply();
     }
 
     public NombreCelular nombreCelular() {
