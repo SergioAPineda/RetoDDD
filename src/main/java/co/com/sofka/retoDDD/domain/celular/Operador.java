@@ -1,41 +1,37 @@
 package co.com.sofka.retoDDD.domain.celular;
 
+
 import co.com.sofka.domain.generic.Entity;
-import co.com.sofka.domain.generic.Identity;
-import co.com.sofka.retoDDD.domain.celular.values.Capacidad;
-import co.com.sofka.retoDDD.domain.celular.values.Gama;
-import co.com.sofka.retoDDD.domain.celular.values.Procesador;
-import co.com.sofka.retoDDD.domain.celular.values.Tamaño;
+import co.com.sofka.retoDDD.domain.celular.values.NombreOperador;
+import co.com.sofka.retoDDD.domain.celular.values.OperadorId;
+import co.com.sofka.retoDDD.domain.celular.values.TipoServicio;
+import co.com.sofka.retoDDD.domain.celular.values.ValorPlan;
 
-public class Operador extends Entity {
+public class Operador extends Entity<OperadorId> {
 
-    private final Gama gama;
-    private final Procesador procesador;
-    private final Capacidad capacidad;
-    private final Tamaño tamaño;
+    private final TipoServicio tipoServicio;
+    private final ValorPlan valorPlan;
+    private final NombreOperador nombreOperador;
 
-    public Operador(Identity entityId, Gama gama, Procesador procesador, Capacidad capacidad, Tamaño tamaño) {
 
-        super(entityId);
-        this.gama = gama;
-        this.procesador = procesador;
-        this.capacidad = capacidad;
-        this.tamaño = tamaño;
+    public Operador(OperadorId operadorId, TipoServicio tipoServicio, ValorPlan valorPlan, NombreOperador nombreOperador) {
+
+        super(operadorId);
+        this.tipoServicio = tipoServicio;
+        this.valorPlan = valorPlan;
+        this.nombreOperador = nombreOperador;
+
     }
 
-    public Gama getGama() {
-        return gama;
+    public TipoServicio tipoServicio() {
+        return tipoServicio;
     }
 
-    public Procesador getProcesador() {
-        return procesador;
+    public ValorPlan valorPlan() {
+        return valorPlan;
     }
 
-    public Capacidad getCapacidad() {
-        return capacidad;
-    }
-
-    public Tamaño getTamaño() {
-        return tamaño;
+    public NombreOperador nombreOperador() {
+        return nombreOperador;
     }
 }
