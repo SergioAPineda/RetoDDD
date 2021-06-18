@@ -5,6 +5,8 @@ import co.com.sofka.retoDDD.domain.celular.values.Descuento;
 import co.com.sofka.retoDDD.domain.celular.values.MarcaId;
 import co.com.sofka.retoDDD.domain.celular.values.NombreMarca;
 
+import java.util.Objects;
+
 public class Marca extends Entity<MarcaId> {
 
     protected NombreMarca nombreMarca;
@@ -15,6 +17,8 @@ public class Marca extends Entity<MarcaId> {
       this.nombreMarca = nombreMarca;
       this.descuento = descuento;
     }
+
+    public void actualizarNombre(NombreMarca nombreMarca){ this.nombreMarca = Objects.requireNonNull(nombreMarca);}
 
     public NombreMarca nombreMarca() {
         return nombreMarca;

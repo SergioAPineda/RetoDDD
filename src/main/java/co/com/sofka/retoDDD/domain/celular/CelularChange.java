@@ -46,5 +46,9 @@ public class CelularChange extends EventChange {
             );
             celular.operadores.add(operador);
         });
+
+        apply((NombreMarcaActualizado event) ->{
+            celular.marcaPorId(event.getMarcaId()).actualizarNombre(event.getNombreMarca());
+        });
     }
 }

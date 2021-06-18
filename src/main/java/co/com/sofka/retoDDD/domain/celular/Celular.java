@@ -138,6 +138,10 @@ public class Celular extends AggregateEvent<CelularId> {
     }
 */
 
+    public Marca marcaPorId(MarcaId marcaId){
+        return marcas.stream().filter(valor ->valor.identity().equals(marcaId)).findFirst().orElseThrow();
+    }
+
     public NombreCelular nombreCelular() {
         return nombreCelular;
     }
