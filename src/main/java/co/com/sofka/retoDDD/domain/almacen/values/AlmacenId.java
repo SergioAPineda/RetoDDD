@@ -6,7 +6,6 @@ import co.com.sofka.retoDDD.domain.celular.values.CelularId;
 public class AlmacenId extends Identity {
 
     public AlmacenId() {
-
     }
 
     private AlmacenId(String id){

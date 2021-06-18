@@ -4,7 +4,6 @@ import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.retoDDD.domain.almacen.events.AlmacenCreado;
 import co.com.sofka.retoDDD.domain.almacen.values.AlmacenId;
 import co.com.sofka.retoDDD.domain.almacen.values.NombreAlmacen;
-import co.com.sofka.retoDDD.domain.almacen.values.Vendedor;
 import co.com.sofka.retoDDD.domain.celular.values.CelularId;
 
 import java.util.Set;
