@@ -1,8 +1,8 @@
 package co.com.sofka.retoDDD.domain.celular;
 
 import co.com.sofka.domain.generic.AggregateEvent;
-import co.com.sofka.retoDDD.domain.celular.events.CelularCreado;
-import co.com.sofka.retoDDD.domain.celular.events.MarcaCreada;
+import co.com.sofka.domain.generic.ValueObject;
+import co.com.sofka.retoDDD.domain.celular.events.*;
 import co.com.sofka.retoDDD.domain.celular.values.*;
 
 import java.util.Objects;
@@ -27,11 +27,104 @@ public class Celular extends AggregateEvent<CelularId> {
         subscribe(new CelularChange(this));
     }
 
+    public void actualizarNombreCelular(CelularId celularId, NombreCelular nombreCelular){
+        Objects.requireNonNull(celularId);
+        Objects.requireNonNull(nombreCelular);
+        appendChange(new NombreCelularActualizado(celularId, nombreCelular)).apply();
+    }
+
+    public void calcularPrecioCelular(CelularId celularId, Precio precio, MarcaId marcaId,Gama gama, Procesador procesador, Descuento descuento){
+        Objects.requireNonNull(celularId);
+        Objects.requireNonNull(precio);
+        Objects.requireNonNull(marcaId);
+        Objects.requireNonNull(gama);
+        Objects.requireNonNull(procesador);
+        Objects.requireNonNull(descuento);
+        appendChange(new PrecioCelularCalculado(celularId, precio, marcaId, gama, procesador, descuento)).apply();
+    }
+
     public void crearMarca(MarcaId marcaId, NombreMarca nombreMarca, Descuento descuento){
         Objects.requireNonNull(marcaId);
         Objects.requireNonNull(nombreMarca);
+        Objects.requireNonNull(descuento);
         appendChange(new MarcaCreada(marcaId, nombreMarca, descuento)).apply();
     }
+
+    public void actualizarNombreMarca(MarcaId marcaId, NombreMarca nombreMarca){
+        Objects.requireNonNull(marcaId);
+        Objects.requireNonNull(nombreMarca);
+        appendChange(new NombreMarcaActualizado(marcaId, nombreMarca)).apply();
+    }
+
+    public void calcularDescuento(MarcaId marcaId, NombreMarca nombreMarca, Descuento descuento){
+        Objects.requireNonNull(marcaId);
+        Objects.requireNonNull(nombreMarca);
+        Objects.requireNonNull(descuento);
+        appendChange(new DescuentoCalculado(marcaId, nombreMarca, descuento)).apply();
+    }
+
+    public void crearCategoria(CategoriaId categoriaId, Gama gama, Procesador procesador, Capacidad capacidad, Tamaño tamaño){
+        Objects.requireNonNull(categoriaId);
+        Objects.requireNonNull(gama);
+        appendChange(new CategoriaCreada(categoriaId, gama, procesador, capacidad, tamaño)).apply();
+    }
+
+    public void definirGama(CategoriaId categoriaId, Gama gama, Procesador procesador, Capacidad capacidad, Tamaño tamaño){
+        Objects.requireNonNull(categoriaId);
+        Objects.requireNonNull(gama);
+        Objects.requireNonNull(procesador);
+        Objects.requireNonNull(capacidad);
+        Objects.requireNonNull(tamaño);
+        appendChange(new GamaDefinida(categoriaId, gama, procesador, capacidad, tamaño)).apply();
+    }
+
+    public void actualizarProcesador(CategoriaId categoriaId, Procesador procesador){
+        Objects.requireNonNull(categoriaId);
+        Objects.requireNonNull(procesador);
+        appendChange(new ProcesadorActualizado(categoriaId, procesador)).apply();
+    }
+
+    public void actualizarCapacidad(CategoriaId categoriaId, Capacidad capacidad){
+        Objects.requireNonNull(categoriaId);
+        Objects.requireNonNull(capacidad);
+        appendChange(new CapacidadActualizada(categoriaId, capacidad)).apply();
+    }
+
+/*    public void actualizarTamaño(CategoriaId categoriaId, Tamaño tamaño){
+        Objects.requireNonNull(categoriaId);
+        Objects.requireNonNull(tamaño);
+        appendChange(new TamañoActualizado(categoriaId, tamaño)).apply();
+    }*/
+
+/*    public void crearOperador(OperadorId operadorId, TipoServicio tipoServicio, ValorPlan valorPlan, NombreOperador nombreOperador){
+        Objects.requireNonNull(operadorId);
+        Objects.requireNonNull(tipoServicio);
+        Objects.requireNonNull(valorPlan);
+        Objects.requireNonNull(nombreOperador);
+        appendChange(new OperadorCreado(operadorId, tipoServicio, valorPlan, nombreOperador)).apply();
+    }*/
+
+/*    public void actualizarNombreOperador(OperadorId operadorId, NombreOperador nombreOperador){
+        Objects.requireNonNull(operadorId);
+        Objects.requireNonNull(nombreOperador);
+        appendChange(new NombreOperadorActualizado(operadorId, nombreOperador)).apply();
+    }*/
+
+/*    public void actualizarTipoServicio(OperadorId operadorId, TipoServicio tipoServicio){
+        Objects.requireNonNull(operadorId);
+        Objects.requireNonNull(tipoServicio);
+        appendChange(new TipoServicioActualizado(operadorId, tipoServicio)).apply();
+    }*/
+
+/*
+    public void definirValorPlan(OperadorId operadorId, TipoServicio tipoServicio, ValorPlan valorPlan, Gama gama){
+        Objects.requireNonNull(operadorId);
+        Objects.requireNonNull(tipoServicio);
+        Objects.requireNonNull(valorPlan);
+        Objects.requireNonNull(gama);
+        appendChange(new ValorPlanDefinido(operadorId, tipoServicio, valorPlan, gama)).apply();
+    }
+*/
 
     public NombreCelular nombreCelular() {
         return nombreCelular;
