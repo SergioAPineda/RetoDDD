@@ -2,7 +2,6 @@ package co.com.sofka.retoDDD.domain.celular;
 
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
-import co.com.sofka.domain.generic.ValueObject;
 import co.com.sofka.retoDDD.domain.celular.events.*;
 import co.com.sofka.retoDDD.domain.celular.values.*;
 
@@ -72,30 +71,23 @@ public class Celular extends AggregateEvent<CelularId> {
         appendChange(new PrecioCelularCalculado(celularId, precio, marcaId, gama, procesador, descuento)).apply();
     }
 
-
-
     public void actualizarNombreMarca(MarcaId marcaId, NombreMarca nombreMarca){
         Objects.requireNonNull(marcaId);
         Objects.requireNonNull(nombreMarca);
         appendChange(new NombreMarcaActualizado(marcaId, nombreMarca)).apply();
     }
 
-    public void calcularDescuento(MarcaId marcaId, NombreMarca nombreMarca, Descuento descuento){
-        Objects.requireNonNull(marcaId);
-        Objects.requireNonNull(nombreMarca);
-        Objects.requireNonNull(descuento);
-        appendChange(new DescuentoCalculado(marcaId, nombreMarca, descuento)).apply();
-    }
-
-
-
-    public void definirGama(CategoriaId categoriaId, Gama gama, Procesador procesador, Capacidad capacidad, Tamaño tamaño){
+    public void actualizarGama(CategoriaId categoriaId, Gama gama){
         Objects.requireNonNull(categoriaId);
         Objects.requireNonNull(gama);
-        Objects.requireNonNull(procesador);
+
+        appendChange(new GamaActualizada(categoriaId, gama)).apply();
+    }
+
+    public void actualizarCapacidad(CategoriaId categoriaId, Capacidad capacidad){
+        Objects.requireNonNull(categoriaId);
         Objects.requireNonNull(capacidad);
-        Objects.requireNonNull(tamaño);
-        appendChange(new GamaDefinida(categoriaId, gama, procesador, capacidad, tamaño)).apply();
+        appendChange(new CapacidadActualizada(categoriaId, capacidad)).apply();
     }
 
     public void actualizarProcesador(CategoriaId categoriaId, Procesador procesador){
@@ -104,10 +96,11 @@ public class Celular extends AggregateEvent<CelularId> {
         appendChange(new ProcesadorActualizado(categoriaId, procesador)).apply();
     }
 
-    public void actualizarCapacidad(CategoriaId categoriaId, Capacidad capacidad){
-        Objects.requireNonNull(categoriaId);
-        Objects.requireNonNull(capacidad);
-        appendChange(new CapacidadActualizada(categoriaId, capacidad)).apply();
+    public void calcularDescuento(MarcaId marcaId, NombreMarca nombreMarca, Descuento descuento){
+        Objects.requireNonNull(marcaId);
+        Objects.requireNonNull(nombreMarca);
+        Objects.requireNonNull(descuento);
+        appendChange(new DescuentoCalculado(marcaId, nombreMarca, descuento)).apply();
     }
 
 /*    public void actualizarTamaño(CategoriaId categoriaId, Tamaño tamaño){
@@ -140,6 +133,10 @@ public class Celular extends AggregateEvent<CelularId> {
 
     public Marca marcaPorId(MarcaId marcaId){
         return marcas.stream().filter(valor ->valor.identity().equals(marcaId)).findFirst().orElseThrow();
+    }
+
+    public Categoria categoriaPorId(CategoriaId categoriaId){
+        return categorias.stream().filter(valor ->valor.identity().equals(categoriaId)).findFirst().orElseThrow();
     }
 
     public NombreCelular nombreCelular() {

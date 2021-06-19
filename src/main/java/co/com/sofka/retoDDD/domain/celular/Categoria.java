@@ -3,6 +3,8 @@ package co.com.sofka.retoDDD.domain.celular;
 import co.com.sofka.domain.generic.Entity;
 import co.com.sofka.retoDDD.domain.celular.values.*;
 
+import java.util.Objects;
+
 public class Categoria extends Entity<CategoriaId> {
 
     protected CategoriaId categoriaId;
@@ -19,6 +21,10 @@ public class Categoria extends Entity<CategoriaId> {
         this.procesador = procesador;
         this.tamaño = tamaño;
     }
+
+    public void actualizarGama(Gama gama){ this.gama = Objects.requireNonNull(gama);}
+    public void actualizarCapacidad(Capacidad capacidad){ this.capacidad = Objects.requireNonNull(capacidad);}
+    public void actualizarProcesador(Procesador procesador){ this.procesador = Objects.requireNonNull(procesador);}
 
     public CategoriaId categoriaId() {
         return categoriaId;

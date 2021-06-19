@@ -2,8 +2,6 @@ package co.com.sofka.retoDDD.domain.celular;
 
 import co.com.sofka.domain.generic.EventChange;
 import co.com.sofka.retoDDD.domain.celular.events.*;
-import co.com.sofka.retoDDD.domain.celular.values.CategoriaId;
-
 import java.util.HashSet;
 
 public class CelularChange extends EventChange {
@@ -49,6 +47,18 @@ public class CelularChange extends EventChange {
 
         apply((NombreMarcaActualizado event) ->{
             celular.marcaPorId(event.getMarcaId()).actualizarNombre(event.getNombreMarca());
+        });
+
+        apply((GamaActualizada event) ->{
+            celular.categoriaPorId(event.getCategoriaId()).actualizarGama(event.getGama());
+        });
+
+        apply((CapacidadActualizada event) ->{
+            celular.categoriaPorId(event.getCategoriaId()).actualizarCapacidad(event.getCapacidad());
+        });
+
+        apply((ProcesadorActualizado event) ->{
+            celular.categoriaPorId(event.getCategoriaId()).actualizarProcesador(event.getProcesador());
         });
     }
 }

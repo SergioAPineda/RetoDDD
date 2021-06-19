@@ -4,12 +4,11 @@ import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.repository.DomainEventRepository;
 import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.domain.generic.DomainEvent;
-import co.com.sofka.retoDDD.domain.celular.Marca;
-import co.com.sofka.retoDDD.domain.celular.commands.ActualizarNombreMarca;
+import co.com.sofka.retoDDD.domain.celular.commands.ActualizarProcesador;
+import co.com.sofka.retoDDD.domain.celular.events.CapacidadActualizada;
 import co.com.sofka.retoDDD.domain.celular.events.CategoriaCreada;
 import co.com.sofka.retoDDD.domain.celular.events.CelularCreado;
-import co.com.sofka.retoDDD.domain.celular.events.MarcaCreada;
-import co.com.sofka.retoDDD.domain.celular.events.NombreMarcaActualizado;
+import co.com.sofka.retoDDD.domain.celular.events.ProcesadorActualizado;
 import co.com.sofka.retoDDD.domain.celular.values.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,47 +21,49 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ActualizarNombreMarcaUseCaseTest {
+public class ActualizarProcesadorTest {
 
-    private ActualizarNombreMarcaUseCase actualizarNombreMarcaUseCase;
+    private ActualizarProcesadorUseCase actualizarProcesadorUseCase;
 
     @Mock
     private DomainEventRepository repository;
 
     @BeforeEach
-    private void setup(){
-        actualizarNombreMarcaUseCase = new ActualizarNombreMarcaUseCase();
+    private void setup() {
+        actualizarProcesadorUseCase = new ActualizarProcesadorUseCase();
         repository = mock(DomainEventRepository.class);
-        actualizarNombreMarcaUseCase.addRepository(repository);
+        actualizarProcesadorUseCase.addRepository(repository);
     }
 
     @Test
-    void modificarDescripcionDeComentarioHappyPath(){
-        var command = new ActualizarNombreMarca(
+    void actualizarProcesadorHappyPath(){
+        var command = new ActualizarProcesador(
                 CelularId.of("xxx"),
-                MarcaId.of("zzz"),
-                new NombreMarca("Samsung")
+                CategoriaId.of("zzz"),
+                new Procesador("SnapDragon")
         );
         when(repository.getEventsBy(any())).thenReturn(events());
 
         var response = UseCaseHandler.getInstance()
                 .syncExecutor(
-                        actualizarNombreMarcaUseCase,
+                        actualizarProcesadorUseCase,
                         new RequestCommand<>(command)
                 ).orElseThrow();
-        var event = (NombreMarcaActualizado)response.getDomainEvents().get(0);
+        var event = (ProcesadorActualizado)response.getDomainEvents().get(0);
 
-        Assertions.assertEquals("Samsung",event.getNombreMarca().value());
+        Assertions.assertEquals("SnapDragon",event.getProcesador().value());
     }
 
     private List<DomainEvent> events() {
         return List.of(new CelularCreado(
                 new NombreCelular("Galaxy S21"),
                 new Precio(2900000)
-        ),new MarcaCreada(
-                MarcaId.of("zzz"),
-                new NombreMarca("Apple"),
-                new Descuento(0.3)
+        ),new CategoriaCreada(
+                CategoriaId.of("zzz"),
+                new Gama("Baja"),
+                new Procesador("OctaCore"),
+                new Capacidad("256 GB"),
+                new Tamaño("6.5 pulgadas")
         ));
     }
 }
