@@ -6,13 +6,15 @@ import co.com.sofka.retoDDD.domain.celular.values.*;
 public class GamaActualizada extends DomainEvent {
 
     private final CategoriaId categoriaId;
+    private final ReceiverId receiverId;
     private final Gama gama;
 
 
-    public GamaActualizada(CategoriaId categoriaId, Gama gama) {
+    public GamaActualizada(CategoriaId categoriaId, Gama gama, ReceiverId receiverId) {
         super("sofka.celular.gamadefinida");
         this.categoriaId = categoriaId;
         this.gama = gama;
+        this.receiverId = receiverId;
     }
 
     public CategoriaId getCategoriaId() {
@@ -24,5 +26,8 @@ public class GamaActualizada extends DomainEvent {
     }
 
 
+    public ReceiverId getReceiverId() {
+        return receiverId;
+    }
 }
 

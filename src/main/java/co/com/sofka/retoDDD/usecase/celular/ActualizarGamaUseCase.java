@@ -12,7 +12,7 @@ public class ActualizarGamaUseCase extends UseCase<RequestCommand<ActualizarGama
         var command = actualizarGamaRequestCommand.getCommand();
         var celular = Celular.from(command.getCelularId(), retrieveEvents(command.getCelularId().value()));
 
-        celular.actualizarGama(command.getCategoriaId(), command.getGama());
+        celular.actualizarGama(command.getCategoriaId(), command.getGama(), command.getReceiverId());
 
         emit().onResponse(new ResponseEvents(celular.getUncommittedChanges()));
     }

@@ -37,7 +37,8 @@ public class ActualizarGamaUseCaseTest {
         var command = new ActualizarGama(
                 CelularId.of("xxx"),
                 CategoriaId.of("zzz"),
-                new Gama("Alta")
+                new Gama("Alta"),
+                ReceiverId.of("aaa")
         );
         when(repository.getEventsBy(any())).thenReturn(events());
 

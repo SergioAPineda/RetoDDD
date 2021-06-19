@@ -77,11 +77,11 @@ public class Celular extends AggregateEvent<CelularId> {
         appendChange(new NombreMarcaActualizado(marcaId, nombreMarca)).apply();
     }
 
-    public void actualizarGama(CategoriaId categoriaId, Gama gama){
+    public void actualizarGama(CategoriaId categoriaId, Gama gama, ReceiverId receiverId){
         Objects.requireNonNull(categoriaId);
         Objects.requireNonNull(gama);
 
-        appendChange(new GamaActualizada(categoriaId, gama)).apply();
+        appendChange(new GamaActualizada(categoriaId, gama, receiverId)).apply();
     }
 
     public void actualizarCapacidad(CategoriaId categoriaId, Capacidad capacidad){
@@ -90,10 +90,10 @@ public class Celular extends AggregateEvent<CelularId> {
         appendChange(new CapacidadActualizada(categoriaId, capacidad)).apply();
     }
 
-    public void actualizarProcesador(CategoriaId categoriaId, Procesador procesador){
+    public void actualizarProcesador(CategoriaId categoriaId, Procesador procesador, ReceiverId receiverId){
         Objects.requireNonNull(categoriaId);
         Objects.requireNonNull(procesador);
-        appendChange(new ProcesadorActualizado(categoriaId, procesador)).apply();
+        appendChange(new ProcesadorActualizado(categoriaId, procesador, receiverId)).apply();
     }
 
     public void calcularDescuento(MarcaId marcaId, NombreMarca nombreMarca, Descuento descuento){

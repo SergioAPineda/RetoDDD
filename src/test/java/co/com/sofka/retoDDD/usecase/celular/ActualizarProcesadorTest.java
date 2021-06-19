@@ -40,7 +40,8 @@ public class ActualizarProcesadorTest {
         var command = new ActualizarProcesador(
                 CelularId.of("xxx"),
                 CategoriaId.of("zzz"),
-                new Procesador("SnapDragon")
+                new Procesador("SnapDragon"),
+                ReceiverId.of("aaa")
         );
         when(repository.getEventsBy(any())).thenReturn(events());
 
